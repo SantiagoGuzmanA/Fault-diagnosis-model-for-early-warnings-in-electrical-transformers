@@ -23,7 +23,6 @@ def deleteZeros(DataBase,Column):
             DB.append(row)
     return(DB)
 
-
 #fname = input("Ingrese el nombre del archivo: ")
 #DB = importDB(fname)
 #for i in DB:
