@@ -12,13 +12,21 @@
 #       -....
 from importDB import*
 
-fname = input("Ingrese el nombre del archivo: ")
+fname = "DatosMonitoringTransformer.txt"
 column = input("Ingrese la columna de la potencia: ")
+
 DB = importDB(fname)
 print("Base de datos con ceros")
 for i in DB:
     print(i)
 print("Base de datos sin ceros")
+
 DB = deleteZeros(DB,int(column))
 for i in DB:
     print(i)
+
+column_index = 1
+
+column_data_float = convert_column_to_float(DB, column_index)
+
+plot_column(column_data_float) 
