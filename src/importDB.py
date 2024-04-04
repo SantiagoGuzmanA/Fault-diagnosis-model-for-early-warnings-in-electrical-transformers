@@ -29,14 +29,14 @@ import matplotlib.pyplot as plt
 
 def plot_column(column_data):
     plt.plot(column_data)
-    plt.xlabel('Índice de fila')
-    plt.ylabel('Valor')
-    plt.title('Gráfico de la columna filtrada')
+    plt.xlabel('# De datos')
+    plt.ylabel('Voltaje')
+    plt.title('Gráfico de Voltaje')
     plt.grid(True)
     plt.show()
 
-def convert_column_to_float(DB, column_index):
-    column_data = [row[column_index] for row in DB]
+def convert_column_to_float(DataBase, column_index):
+    column_data = [row[column_index] for row in DataBase]
     converted_column = []
 
     for value in column_data:
