@@ -16,17 +16,11 @@ fname = "DatosMonitoringTransformer.txt"
 column = input("Ingrese la columna de la potencia: ")
 
 DB = importDB(fname)
-print("Base de datos con ceros")
-for i in DB:
-    print(i)
-print("Base de datos sin ceros")
+print("Tamaño de la Base de datos con ceros: " + str(len(DB)))
 
 DB = deleteZeros(DB,int(column))
-for i in DB:
-    print(i)
-
+print("Tamaño de la Base de datos sin ceros: " + str(len(DB)))
+  
 column_index = 1
 
-column_data_float = convert_column_to_float(DB, column_index)
-
-plot_column(column_data_float) 
+plot_column(DB,1)
