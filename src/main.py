@@ -15,7 +15,7 @@ from importDB import*
 fname = "DatosMonitoringTransformer.txt"
 column = input("Ingrese la columna de la potencia: ")
 
-DB = importDB(fname)
+DB = imptDB(fname)
 print("Tamaño de la Base de datos con ceros: " + str(len(DB)))
 
 DB = deleteZeros(DB,int(column))

@@ -1,4 +1,4 @@
-def importDB(DataBase):
+def impDB(DataBase):
     try:
         fhand = open(DataBase)
     except:
