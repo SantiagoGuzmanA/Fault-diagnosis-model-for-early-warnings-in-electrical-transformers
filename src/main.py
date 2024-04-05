@@ -18,9 +18,14 @@ column = input("Ingrese la columna de la potencia: ")
 DB = impDB(fname)
 print("Tamaño de la Base de datos con ceros: " + str(len(DB)))
 
+#for i in DB:
+    #print(i)
+    
 DB = deleteZeros(DB,int(column))
 print("Tamaño de la Base de datos sin ceros: " + str(len(DB)))
-  
+#for i in DB:
+    #print(i)
+    
 column_index = 1
 
 plot_column(DB,1)
