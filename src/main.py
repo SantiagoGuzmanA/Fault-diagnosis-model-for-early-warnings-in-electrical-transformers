@@ -19,6 +19,8 @@
 #       - Visualizacion de las filas corregidas por potencia
 #       - ....
 from importDB import*
+from DeleteZerosDB import*
+from GraphicDB import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = input("Ingrese la columna de la potencia: ")
