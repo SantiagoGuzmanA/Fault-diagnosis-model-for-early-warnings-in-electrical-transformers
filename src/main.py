@@ -21,6 +21,7 @@
 from importDB import*
 from DeleteZerosDB import*
 from GraphicDB import*
+from CalculoPotencia import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = input("Ingrese la columna de la potencia: ")
@@ -39,3 +40,10 @@ print("Tamaño de la Base de datos sin ceros: " + str(len(DB)))
 column_index = 1
 
 plot_column(DB,1)
+
+# Suponiendo que tienes tu base de datos cargada en una lista llamada 'database'
+potencias_por_registro = calcular_potencia_por_registro(DB)
+
+print("Valores de las primeras 30 filas de la base de datos y potencias calculadas:")
+for i, (registro, potencia) in enumerate(zip(DB[1:31], potencias_por_registro[:30]), 1):
+    print(f'Registro {i}: Datos = {registro}, Potencia = {potencia} W')
