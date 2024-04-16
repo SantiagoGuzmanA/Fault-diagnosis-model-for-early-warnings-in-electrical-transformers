@@ -10,5 +10,6 @@ def calcular_potencia_por_registro(database):
         vl = math.sqrt(3) * vf_promedio  
         
         potencia_registro = math.sqrt(3) * vl * sum(corrientes)
-        potencias.append(potencia_registro)
+        potencia_aproximada = round(potencia_registro, 1)
+        potencias.append(potencia_aproximada)
     return (potencias)
