@@ -13,4 +13,4 @@ def calcular_potencia_por_registro(database):
         
         potencia_registro = math.sqrt(3) * vl * sum(corrientes)  # Calcula la potencia
         potencias.append(potencia_registro)
-    return potencias
+    return (potencias)
