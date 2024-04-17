@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
-def plot_column(DataBase,column_index):
-    column_data = [row[column_index] for row in DataBase]
+def plot_column(DataBase,column_G):
+    column_data = tuple(row[column_G] for row in DataBase)
     converted_column = []
 
     for value in column_data[1:]:
