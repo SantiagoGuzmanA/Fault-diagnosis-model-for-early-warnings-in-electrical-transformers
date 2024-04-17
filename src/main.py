@@ -34,8 +34,9 @@ print("Tamaño de la Base de datos sin ceros: " + str(len(DBZ)))
 #for i in DB:
     #print(i)
     
-column_G = 1
-plot_column(DBZ,1)
+plot_column(DBZ,4)
+plot_column1(DBZ,5)
+plot_column2(DBZ,6)
 
 potencias_por_registro = calcular_potencia_por_registro(DBZ)
 print("Valores de las primeras 30 filas de la base de datos y potencias calculadas:")
