@@ -7,7 +7,7 @@ def deleteZeros(DataBase,Columns):
     
     DBZ=[]
     for row in DataBase:
-        if all(row[Column-1] == 0 for Column in Columns):
+        if all(row[Column] == 0 for Column in Columns):
             continue
         else:
             DBZ.append(row)
