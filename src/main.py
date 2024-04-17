@@ -22,9 +22,10 @@ from importDB import*
 from DeleteZerosDB import*
 from GraphicDB import*
 from CalculoPotencia import*
+from Desviacion_Estandar import*
 
 fname = "DatosMonitoringTransformer.txt"
-column = [5, 6, 7]
+column = [4, 5, 6]
 DB = impDB(fname)
 print("Tamaño de la Base de datos con ceros: " + str(len(DB)))
 #for i in DB:
@@ -43,5 +44,7 @@ print("Valores de las primeras 30 filas de la base de datos y potencias calculad
 for i, (registro, potencia) in enumerate(zip(DBZ[1:31], potencias_por_registro[:30]), 1):
     print(f'Registro {i}: Datos = {registro}, Potencia = {potencia} KvA')
 
-#for fila in DB:
-#    print(fila[10])
+DE1,DE2,DE3 = desviacion_estandar(DBZ)
+print(f"Desviación Estándar I1: {DE1}")
+print(f"Desviación Estándar I2: {DE2}")
+print(f"Desviación Estándar I3: {DE3}")
