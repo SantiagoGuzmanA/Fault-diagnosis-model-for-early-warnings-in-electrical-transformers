@@ -23,9 +23,9 @@ def desviacion_estandar(database):
         distMediaI2.append(abs(row[5]-I2avg)**2)
         distMediaI3.append(abs(row[6]-I3avg)**2)
     
-    DEI1 = math.sqrt(sum(distMediaI1) / len(distMediaI1))
-    DEI2 = math.sqrt(sum(distMediaI2) / len(distMediaI2))
-    DEI3 = math.sqrt(sum(distMediaI3) / len(distMediaI3))
+    DEI1 = round(math.sqrt(sum(distMediaI1) / len(distMediaI1)),2)
+    DEI2 = round(math.sqrt(sum(distMediaI2) / len(distMediaI2)),2)
+    DEI3 = round(math.sqrt(sum(distMediaI3) / len(distMediaI3)),2)
     return(DEI1,DEI2,DEI3)
         
         
