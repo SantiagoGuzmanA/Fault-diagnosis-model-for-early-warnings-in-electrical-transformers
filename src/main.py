@@ -45,6 +45,7 @@ print("Valores de las primeras 30 filas de la base de datos y potencias calculad
 for i, (registro, potencia) in enumerate(zip(DBZ[1:31], potencias_por_registro[:30]), 1):
     print(f'Registro {i}: Datos = {registro}, Potencia = {potencia} KvA')
 
+print(DBZ[0])
 DE1,DE2,DE3,LIM1I1,LIM2I1,LIM1I2,LIM2I2,LIM1I3,LIM2I3 = desviacion_estandar(DBZ)
 print(f"Desviación Estándar I1: {DE1}")
 print(f"Desviación Estándar I2: {DE2}")
