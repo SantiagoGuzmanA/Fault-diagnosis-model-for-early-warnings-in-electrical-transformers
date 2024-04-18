@@ -26,8 +26,12 @@ def desviacion_estandar(database):
     DEI1 = round(math.sqrt(sum(distMediaI1) / len(distMediaI1)),2)
     DEI2 = round(math.sqrt(sum(distMediaI2) / len(distMediaI2)),2)
     DEI3 = round(math.sqrt(sum(distMediaI3) / len(distMediaI3)),2)
-    return(DEI1,DEI2,DEI3)
-        
-        
     
+    LIM1I1 = I1avg + DEI1
+    LIM2I1 = I1avg - DEI1
+    LIM1I2 = I2avg + DEI2
+    LIM2I2 = I2avg - DEI2
+    LIM1I3 = I3avg + DEI3
+    LIM2I3 = I3avg - DEI3
     
+    return(DEI1,DEI2,DEI3,LIM1I1,LIM2I1,LIM1I2,LIM2I2,LIM1I3,LIM2I3)
