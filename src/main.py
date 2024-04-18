@@ -23,6 +23,7 @@ from DeleteZerosDB import*
 from GraphicDB import*
 from CalculoPotencia import*
 from Desviacion_Estandar import*
+from ValoresAtipicos import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]
@@ -49,3 +50,13 @@ print(f"Desviación Estándar I1: {DE1}")
 print(f"Desviación Estándar I2: {DE2}")
 print(f"Desviación Estándar I3: {DE3}")
 print(f"Desviación Estándar I3: {LIM1I1,LIM2I1}")
+
+valores_dentro_limites, valores_atipicos = filtrar_valores_atipicos(DBZ, LIM1I1, LIM2I1, LIM1I2, LIM2I2, LIM1I3, LIM2I3)
+
+print("Valores dentro de los límites:")
+#for row in valores_dentro_limites:
+print(len(valores_dentro_limites))
+
+print("\nValores atípicos:")
+#for row in valores_atipicos:
+print(len(valores_atipicos))
