@@ -5,7 +5,7 @@ def desviacion_estandar(database):
     I1 = []
     I2 = []
     I3 = []
-    for row in database[1:]:
+    for row in database:
         I1.append(row[4])
         I2.append(row[5])
         I3.append(row[6])
@@ -18,7 +18,7 @@ def desviacion_estandar(database):
     distMediaI2 =[]
     distMediaI3 =[]
     
-    for row in database[1:]:
+    for row in database:
         distMediaI1.append(abs(row[4]-I1avg)**2)
         distMediaI2.append(abs(row[5]-I2avg)**2)
         distMediaI3.append(abs(row[6]-I3avg)**2)

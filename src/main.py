@@ -49,7 +49,7 @@ DE1,DE2,DE3,LIM1I1,LIM2I1,LIM1I2,LIM2I2,LIM1I3,LIM2I3 = desviacion_estandar(DBZ)
 print(f"Desviación Estándar I1: {DE1}")
 print(f"Desviación Estándar I2: {DE2}")
 print(f"Desviación Estándar I3: {DE3}")
-print(f"Desviación Estándar I3: {LIM1I1,LIM2I1}")
+#print(f"Desviación Estándar I3: {LIM1I1,LIM2I1}")
 
 valores_dentro_limites, valores_atipicos = filtrar_valores_atipicos(DBZ, LIM1I1, LIM2I1, LIM1I2, LIM2I2, LIM1I3, LIM2I3)
 
@@ -59,4 +59,6 @@ print(len(valores_dentro_limites))
 
 print("\nValores atípicos:")
 #for row in valores_atipicos:
+    #print(valores_atipicos)
 print(len(valores_atipicos))
+print(type(valores_atipicos))
