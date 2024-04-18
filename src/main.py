@@ -18,12 +18,12 @@
 #       - Grafica del voltaje
 #       - Visualizacion de las filas corregidas por potencia
 #       - ....
-from importDB import*
+from ImportDB import*
 from DeleteZerosDB import*
 from GraphicDB import*
-from CalculoPotencia import*
-from Desviacion_Estandar import*
-from ValoresAtipicos import*
+from PowerCalculation import*
+from StandarDeviation import*
+from AtypicalValues import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]
