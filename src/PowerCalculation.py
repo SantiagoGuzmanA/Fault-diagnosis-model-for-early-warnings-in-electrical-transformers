@@ -1,6 +1,5 @@
 import math
 def calculate_power_per_record(database):
-
     powers = []
     for register in database[1:]:
         phase_voltages = register[1:4]  
