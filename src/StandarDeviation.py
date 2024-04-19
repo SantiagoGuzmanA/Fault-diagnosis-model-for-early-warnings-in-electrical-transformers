@@ -1,7 +1,6 @@
 #Calculo de la desviación estandar
 import math
-
-def desviacion_estandar(database):
+def standard_deviation(database):
     I1 = []
     I2 = []
     I3 = []
