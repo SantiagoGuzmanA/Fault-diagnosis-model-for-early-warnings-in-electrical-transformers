@@ -52,7 +52,7 @@ print(f"Desviación Estándar I2: {DE2}")
 print(f"Desviación Estándar I3: {DE3}")
 
 
-valores_dentro_limites, valores_atipicos = filtrar_valores_atipicos(DBZ, LIM1I1, LIM2I1, LIM1I2, LIM2I2, LIM1I3, LIM2I3)
+valores_dentro_limites, valores_atipicos = filter_outlier_values(DBZ, LIM1I1, LIM2I1, LIM1I2, LIM2I2, LIM1I3, LIM2I3)
 
 print("Valores dentro de los límites:")
 #for row in valores_dentro_limites:
