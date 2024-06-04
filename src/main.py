@@ -7,6 +7,7 @@
 #   - Mostrar las filas que quedaron despues de las eliminadas por 0
 #   - Hacer el calculo de la potencia y verificarlo con la columna de la potencia para garantizar que esten bien los datos
 #   - ....
+# Los readme se deben de hacer para cada carpeta
 #   - ....
 #   INPUT:
 #       - Nombre del archivo de la base de datos con su respectiva extención: Solo compatible con archivos .txt
