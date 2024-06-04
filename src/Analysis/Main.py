@@ -19,12 +19,17 @@
 #       - Grafica del voltaje
 #       - Visualizacion de las filas corregidas por potencia
 #       - ....
-from Preprocessing.ImportDB import *
-from Preprocessing.DeleteZerosDB import*
-from Visualization.GraphicDB import*
-from Analysis.PowerCalculation import*
-from Analysis.StandarDeviation import*
-from Analysis.AtypicalValues import*
+import sys
+import os
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+print(project_root)
+from src.Preprocessing.ImportDB import *
+from src.Preprocessing.DeleteZerosDB import*
+from src.Visualization.GraphicDB import*
+from src.Analysis.PowerCalculation import*
+from src.Analysis.StandarDeviation import*
+from src.Analysis.AtypicalValues import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]

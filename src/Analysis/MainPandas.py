@@ -1,4 +1,8 @@
-from WorkPandas import*
+import sys
+import os
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+from src.Preprocessing.WorkPandas import*
 #import Dataframe 
 print("Here we can see a summary of the information in the dataframe: \n")
 df.info()

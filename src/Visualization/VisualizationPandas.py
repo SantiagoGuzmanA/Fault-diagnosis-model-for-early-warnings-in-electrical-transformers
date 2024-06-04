@@ -1,0 +1,56 @@
+import sys
+import os
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+from src.Preprocessing.WorkPandas import*
+import matplotlib.pyplot as plt
+import scipy.stats as stats
+import seaborn as sns
+#Histogramas
+dfZeros.hist(figsize=(10, 8))
+print("Histograms of each variable:")
+print("\n")
+plt.tight_layout()
+plt.show()
+#Distribution histogram
+voltage_features = ["Phase 1 Voltage", "Phase 2 Voltage", "Phase 3 Voltage"]
+current_features = ["Phase 1 Current", "Phase 2 Current", "Phase 3 Current"]
+difference_features = ["1-2 Voltage", "2-3 Voltage", "3-1 Voltage"]
+plt.figure(figsize=(25, 5))
+for feature in voltage_features:
+    plt.subplot(1, 3, 1)
+    sns.histplot(data=dfZeros, x=feature, kde=False, alpha=0.7, label=feature)
+plt.title('Histogram of Phase Voltage')
+plt.xlabel('Voltage')
+plt.ylabel('Frequency')
+plt.legend(loc='upper left')
+print("Distribution by voltage phase characteristics:")
+print("\n")
+plt.tight_layout()
+plt.show()
+#Distribution histogram by density plot 
+plt.figure(figsize=(25, 5))
+for feature in current_features:
+    plt.subplot(1, 3, 2)
+    sns.histplot(data=dfZeros, x=feature, kde=True, alpha=0.7, label=feature)
+plt.title('Histogram of Phase Current')
+plt.xlabel('Current')
+plt.ylabel('Frequency')
+plt.legend()
+print("Distribution by classes of phase currents with their density plot:")
+print("\n")
+plt.tight_layout()
+plt.show()
+#density plot
+plt.figure(figsize=(25, 5))
+for feature in difference_features:
+    plt.subplot(1, 3, 3)
+    sns.kdeplot(data=dfZeros, x=feature, fill=True, alpha=0.5,  linewidth=0.5, label=feature)
+plt.title('Histogram of Voltage Differences')
+plt.xlabel('Voltage Difference')
+plt.ylabel('Frequency')
+plt.legend(loc='upper left')
+print("Density plot of inter-phase voltages:")
+print("\n")
+plt.tight_layout()
+plt.show()
