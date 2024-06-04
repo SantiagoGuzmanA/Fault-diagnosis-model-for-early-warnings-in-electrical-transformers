@@ -1,13 +1,8 @@
-def deleteZeros(DataBase,Columns):
-    try:
-        if not isinstance(DataBase,list):
-            raise TypeError("La entrada de la funcion para eliminar los ceros de la columna de voltage no es un arreglo")
-    except TypeError as Error:
-        print(Error)
-    DBZ=[]
-    for row in DataBase:
-        if all(row[Column] == 0 for Column in Columns):
-            continue
-        else:
-            DBZ.append(row)
-    return(DBZ)
+def deleteZerosOP(DataBase, Columns):  # O(1)
+    if not isinstance(DataBase, list):  # O(1)
+        raise TypeError("The input of the function to remove zeros from the current column is not an array")  # O(1)
+    try:  # O(1)
+        DBZ = [row for row in DataBase if not all(row[column] == 0 for column in Columns)]  # O(n)
+    except TypeError as Error:  # O(1)
+        print(Error)  # O(1)
+    return DBZ  # O(1)

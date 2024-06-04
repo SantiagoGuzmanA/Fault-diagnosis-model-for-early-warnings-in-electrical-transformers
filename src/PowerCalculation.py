@@ -1,14 +1,6 @@
 import math
-def calculate_power_per_record(database):
-    powers = []
-    for register in database[1:]:
-        phase_voltages = register[1:4]  
-        currents = register[4:7]  
-        vf_average = sum(phase_voltages) / len(phase_voltages)
-        vl = math.sqrt(3) * vf_average
-        I_average = sum(currents) / len(currents)
-        
-        power_registration = (math.sqrt(3) * vl * I_average)/1000
-        approximate_power = round(power_registration, 2)
-        powers.append(approximate_power)
-    return (powers)
+def calculate_power_per_recordOP(database): # O(1)
+    powers = [] # O(1)
+    for register in database[1:]: # O(n)
+        powers.append (round((math.sqrt(3) * (math.sqrt(3) * (sum(register[1:4]) / 3)) * (sum(register[4:7]) / 3)) / 1000, 2)) # O(1)
+    return powers # O(1)

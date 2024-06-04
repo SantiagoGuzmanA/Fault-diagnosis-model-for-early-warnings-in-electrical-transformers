@@ -26,22 +26,19 @@ from PowerCalculation import*
 from StandarDeviation import*
 from AtypicalValues import*
 
+
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]
 DB = impDB(fname)
 print("Tamaño de la Base de datos con ceros: " + str(len(DB)))
-#for i in DB:
-    #print(i)
-DBZ = deleteZeros(DB,column)
+DBZ = deleteZerosOP(DB,column)
 print("Tamaño de la Base de datos sin ceros: " + str(len(DBZ)))
-#for i in DB:
-    #print(i)
     
 plot_column(DBZ,4)
 plot_column1(DBZ,5)
 plot_column2(DBZ,6)
 
-potencias_por_registro = calculate_power_per_record(DBZ)
+potencias_por_registro = calculate_power_per_recordOP(DBZ)
 print("Valores de las primeras 30 filas de la base de datos y potencias calculadas:")
 for i, (registro, potencia) in enumerate(zip(DBZ[1:31], potencias_por_registro[:30]), 1):
     print(f'Registro {i}: Datos = {registro}, Potencia = {potencia} KvA')
