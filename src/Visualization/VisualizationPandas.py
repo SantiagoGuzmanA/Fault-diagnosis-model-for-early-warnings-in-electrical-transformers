@@ -54,3 +54,52 @@ print("Density plot of inter-phase voltages:")
 print("\n")
 plt.tight_layout()
 plt.show()
+#Density plots:
+feature_groups = {
+    'Phase Voltages': ["Phase 1 Voltage", "Phase 2 Voltage", "Phase 3 Voltage"],
+    'Phase Currents': ["Phase 1 Current", "Phase 2 Current", "Phase 3 Current"],
+    'Voltage Differences': ["1-2 Voltage", "2-3 Voltage", "3-1 Voltage"]
+}
+
+plt.figure(figsize=(25, 5))
+
+for i, (title, features) in enumerate(feature_groups.items()):
+    plt.subplot(1, 3, i + 1)
+    for feature in features:
+        sns.kdeplot(data=dfZeros, x=feature, fill=True, alpha=0.5, linewidth=0.5, label=feature)
+    plt.title(f'Density Plot of {title}')
+    plt.xlabel('Values')
+    plt.ylabel('Density')
+    plt.legend(loc='upper center')
+print("Density plots:")
+print("\n")
+plt.tight_layout()
+plt.show()
+#Box plots
+plt.figure(figsize=(15, 5))
+
+for i, (title, features) in enumerate(feature_groups.items()):
+    plt.subplot(1, 3, i + 1)
+    sns.boxplot(data=dfZeros[features])
+    plt.title(f'Boxplot of {title}')
+    plt.xlabel(title)
+    plt.ylabel('Values')
+    plt.xticks(ticks=range(len(features)), labels=features)
+print("Box plots:")
+print("\n")
+plt.tight_layout()
+plt.show()
+#violin
+plt.figure(figsize=(15, 5))
+
+for i, (title, features) in enumerate(feature_groups.items()):
+    plt.subplot(1, 3, i + 1)
+    sns.violinplot(data=dfZeros[features], palette='Set2')
+    plt.title(f'Violin Plot of {title}')
+    plt.xlabel(title)
+    plt.ylabel('Values')
+    plt.xticks(ticks=range(len(features)), labels=features)
+print("Violin plots:")
+print("\n")
+plt.tight_layout()
+plt.show()
