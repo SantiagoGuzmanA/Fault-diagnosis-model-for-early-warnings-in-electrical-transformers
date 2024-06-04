@@ -19,12 +19,12 @@
 #       - Grafica del voltaje
 #       - Visualizacion de las filas corregidas por potencia
 #       - ....
-from ImportDB import*
-from DeleteZerosDB import*
+from Preprocessing.ImportDB import *
+from Preprocessing.DeleteZerosDB import*
 from Visualization.GraphicDB import*
-from PowerCalculation import*
-from StandarDeviation import*
-from AtypicalValues import*
+from Analysis.PowerCalculation import*
+from Analysis.StandarDeviation import*
+from Analysis.AtypicalValues import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]
