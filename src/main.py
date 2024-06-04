@@ -26,7 +26,6 @@ from PowerCalculation import*
 from StandarDeviation import*
 from AtypicalValues import*
 
-
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]
 #importar base de datos
@@ -39,6 +38,7 @@ print("Tamaño de la Base de datos sin ceros: " + str(len(DBZ)))
 plot_column(DBZ,4)
 plot_column1(DBZ,5)
 plot_column2(DBZ,6)
+plot_power_bar(DBZ)
 #power calculation
 potencias_por_registro = calculate_power_per_recordOP(DBZ)
 print("Valores de las primeras 30 filas de la base de datos y potencias calculadas:")
