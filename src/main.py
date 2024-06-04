@@ -21,7 +21,7 @@
 #       - ....
 from ImportDB import*
 from DeleteZerosDB import*
-from GraphicDB import*
+from Visualization.GraphicDB import*
 from PowerCalculation import*
 from StandarDeviation import*
 from AtypicalValues import*
