@@ -29,35 +29,35 @@ from AtypicalValues import*
 
 fname = "DatosMonitoringTransformer.txt"
 column = [4, 5, 6]
+#importar base de datos
 DB = impDB(fname)
 print("Tamaño de la Base de datos con ceros: " + str(len(DB)))
+#Deletezeros
 DBZ = deleteZerosOP(DB,column)
 print("Tamaño de la Base de datos sin ceros: " + str(len(DBZ)))
-    
+#Graphics
 plot_column(DBZ,4)
 plot_column1(DBZ,5)
 plot_column2(DBZ,6)
-
+#power calculation
 potencias_por_registro = calculate_power_per_recordOP(DBZ)
 print("Valores de las primeras 30 filas de la base de datos y potencias calculadas:")
 for i, (registro, potencia) in enumerate(zip(DBZ[1:31], potencias_por_registro[:30]), 1):
     print(f'Registro {i}: Datos = {registro}, Potencia = {potencia} KvA')
-
-
-DE1,DE2,DE3,LIM1I1,LIM2I1,LIM1I2,LIM2I2,LIM1I3,LIM2I3 = standard_deviation(DBZ)
-print(f"Desviación Estándar I1: {DE1}")
-print(f"Desviación Estándar I2: {DE2}")
-print(f"Desviación Estándar I3: {DE3}")
-
-
+#standard deviation
+DE1,DE2,DE3,LIM1I1,LIM2I1,LIM1I2,LIM2I2,LIM1I3,LIM2I3 = standard_deviationOP(DBZ)
+print(f"Standard deviation I1: {DE1}")
+print(f"Standard deviation I2: {DE2}")
+print(f"Standard deviation I3: {DE3}")
+print(f"Upper limit I1: {LIM1I1}")
+print(f"Lower limit I1: {LIM2I1}")
+print(f"Upper limit I2: {LIM1I2}")
+print(f"Lower limit I2: {LIM2I2}")
+print(f"Upper limit I3: {LIM1I3}")
+print(f"Lower limit I3: {LIM2I3}\n")
+#Atypical values
 valores_dentro_limites, valores_atipicos = filter_outlier_values(DBZ, LIM1I1, LIM2I1, LIM1I2, LIM2I2, LIM1I3, LIM2I3)
-
 print("Valores dentro de los límites:")
-#for row in valores_dentro_limites:
 print(len(valores_dentro_limites))
-
 print("\nValores atípicos:")
-#for row in valores_atipicos:
-    #print(valores_atipicos)
 print(len(valores_atipicos))
-print(type(valores_atipicos))
