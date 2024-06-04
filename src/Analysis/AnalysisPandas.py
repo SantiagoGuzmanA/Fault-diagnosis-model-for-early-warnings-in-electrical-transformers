@@ -121,33 +121,46 @@ for target_variable in target_variables:
     print(correlation_with_target)
     print()
 #Random Forest Classifier
-# I1N = Column(dfRename,"Phase 1 Current")
-# I2N = Column(dfRename,"Phase 2 Current")
-# I3N = Column(dfRename,"Phase 3 Current")
+class Column():
+  def  __init__(self,df,columnName):
+    self.column = df[columnName]
+    self.mean = self.column.mean()
+    self.mode = self.column.mode()
+    self.median = self.column.median()
+    self.Q1 = self.column.quantile(0.25)
+    self.Q3 = self.column.quantile(0.75)
+    self.std = self.column.std()
+    self.IQR = self.Q3 - self.Q1
+    self.lower_bound = self.mean - self.std
+    self.upper_bound = self.mean + self.std
 
-# dfRename["Fault"] = ((dfRename["Phase 1 Current"] < I1N.lower_bound) | (dfRename["Phase 1 Current"] > I1N.upper_bound) | (dfRename["Phase 2 Current"] < I2N.lower_bound) | (dfRename["Phase 2 Current"] > I2N.upper_bound) | (dfRename["Phase 3 Current"] < I3N.lower_bound) | (dfRename["Phase 3 Current"] > I3N.upper_bound)).astype(int)
+I1N = Column(dfRename,"Phase 1 Current")
+I2N = Column(dfRename,"Phase 2 Current")
+I3N = Column(dfRename,"Phase 3 Current")
 
-# dfRename.head(10)
+dfRename["Fault"] = ((dfRename["Phase 1 Current"] < I1N.lower_bound) | (dfRename["Phase 1 Current"] > I1N.upper_bound) | (dfRename["Phase 2 Current"] < I2N.lower_bound) | (dfRename["Phase 2 Current"] > I2N.upper_bound) | (dfRename["Phase 3 Current"] < I3N.lower_bound) | (dfRename["Phase 3 Current"] > I3N.upper_bound)).astype(int)
 
-# X = dfRename[["Phase 1 Current", "Phase 2 Current","Phase 3 Current"]]
-# y = dfRename["Fault"]
+dfRename.head(10)
 
-# from sklearn.model_selection import train_test_split
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X = dfRename[["Phase 1 Current", "Phase 2 Current","Phase 3 Current"]]
+y = dfRename["Fault"]
 
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# model = RandomForestClassifier(random_state=42)
-# model.fit(X_train, y_train)
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
-# y_pred = model.predict(X_test)
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train, y_train)
 
-# print("Confusion Matrix:")
-# print(confusion_matrix(y_test, y_pred))
+y_pred = model.predict(X_test)
 
-# print("\nClassification Report:")
-# print(classification_report(y_test, y_pred))
+print("Confusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
 
-# print("\nModel Accuracy:")
-# print(accuracy_score(y_test, y_pred))
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+print("\nModel Accuracy:")
+print(accuracy_score(y_test, y_pred))
