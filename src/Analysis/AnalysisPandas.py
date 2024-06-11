@@ -14,14 +14,35 @@ from src.Preprocessing.WorkPandas import*
 
 def shapiro_tests(df, groups_dict):
     """
-    Realiza la prueba de Shapiro-Wilk para varios grupos de columnas.
+    Performs Shapiro-Wilk tests for normality on specified columns of a DataFrame grouped by a dictionary.
 
     Parameters:
-    df (DataFrame): El DataFrame con los datos a probar.
-    groups_dict (dict): Un diccionario que mapea los nombres de los grupos a las listas de columnas correspondientes.
+    df (pandas.DataFrame): The DataFrame containing the data.
+    groups_dict (dict): A dictionary where keys are group names and values are lists of column names to test.
 
     Returns:
-    dict: Diccionario anidado con los resultados de la prueba de Shapiro-Wilk para cada grupo y columna.
+    dict: A nested dictionary where the first level keys are group names, 
+          the second level keys are column names, and the values are Shapiro-Wilk test results.
+
+    Example:
+    >>> import pandas as pd
+    >>> data = {
+    ...     'A': [1.1, 2.3, 3.3, 4.4, 5.5],
+    ...     'B': [2.2, 3.4, 4.4, 5.5, 6.6],
+    ...     'C': [3.3, 4.5, 5.5, 6.6, 7.7]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> groups_dict = {'Group1': ['A', 'B'], 'Group2': ['C']}
+    >>> shapiro_tests(df, groups_dict)
+    {
+        'Group1': {
+            'A': (statistic=0.9867621660232544, pvalue=0.9671739935874939),
+            'B': (statistic=0.9867621660232544, pvalue=0.9671739935874939)
+        },
+        'Group2': {
+            'C': (statistic=0.9867621660232544, pvalue=0.9671739935874939)
+        }
+    }
     """
     shapiro_results = {}
     for group, columns in groups_dict.items():
@@ -34,15 +55,36 @@ def shapiro_tests(df, groups_dict):
 
 def kstest_multiple_groups(df, groups_dict, distribution='norm'):
     """
-    Realiza el test de Kolmogorov-Smirnov para varios grupos de columnas.
+    Performs Kolmogorov-Smirnov tests for specified columns in a DataFrame grouped by a dictionary.
 
     Parameters:
-    df (DataFrame): El DataFrame con los datos a probar.
-    groups_dict (dict): Un diccionario que mapea los nombres de los grupos a las listas de columnas correspondientes.
-    distribution (str, optional): La distribución a comparar con los datos. Por defecto es 'norm' para distribución normal.
+    df (pandas.DataFrame): The DataFrame containing the data.
+    groups_dict (dict): A dictionary where keys are group names and values are lists of column names to test.
+    distribution (str): The distribution to test against. Default is 'norm' for the normal distribution.
 
     Returns:
-    dict: Diccionario anidado con los resultados del test de Kolmogorov-Smirnov para cada grupo y columna.
+    dict: A nested dictionary where the first level keys are group names, 
+          the second level keys are column names, and the values are Kolmogorov-Smirnov test results.
+
+    Example:
+    >>> import pandas as pd
+    >>> data = {
+    ...     'A': [1.1, 2.3, 3.3, 4.4, 5.5],
+    ...     'B': [2.2, 3.4, 4.4, 5.5, 6.6],
+    ...     'C': [3.3, 4.5, 5.5, 6.6, 7.7]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> groups_dict = {'Group1': ['A', 'B'], 'Group2': ['C']}
+    >>> kstest_multiple_groups(df, groups_dict)
+    {
+        'Group1': {
+            'A': KstestResult(statistic=0.1, pvalue=0.9999948482260321, statistic_location=1.1, statistic_sign=-1),
+            'B': KstestResult(statistic=0.1, pvalue=0.9999948482260321, statistic_location=2.2, statistic_sign=-1)
+        },
+        'Group2': {
+            'C': KstestResult(statistic=0.1, pvalue=0.9999948482260321, statistic_location=3.3, statistic_sign=-1)
+        }
+    }
     """
     ks_results = {}
     for group, columns in groups_dict.items():
@@ -55,14 +97,27 @@ def kstest_multiple_groups(df, groups_dict, distribution='norm'):
 
 def kruskal_wallis_test(df, groups, group_name):
     """
-    Realiza el test de Kruskal-Wallis para comparar varias muestras independientes.
+    Performs the Kruskal-Wallis H-test for independent samples on specified columns in a DataFrame.
 
-    Parámetros:
-    df (DataFrame): El DataFrame que contiene los datos a comparar.
-    columns (list): La lista de columnas que representan las muestras a comparar.
+    Parameters:
+    df (pandas.DataFrame): The DataFrame containing the data.
+    groups (dict): A dictionary where keys are group names and values are lists of column names to test.
+    group_name (str): The name of the group to test.
 
-    Retorna:
-    tuple: Una tupla que contiene el estadístico H y el valor p del test de Kruskal-Wallis.
+    Returns:
+    tuple: A tuple containing the H statistic and the p-value of the test.
+
+    Example:
+    >>> import pandas as pd
+    >>> data = {
+    ...     'A': [1.1, 2.3, 3.3, 4.4, 5.5],
+    ...     'B': [2.2, 3.4, 4.4, 5.5, 6.6],
+    ...     'C': [3.3, 4.5, 5.5, 6.6, 7.7]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> groups = {'Group1': ['A', 'B', 'C']}
+    >>> kruskal_wallis_test(df, groups, 'Group1')
+    (1.107, 0.575)
     """
     columns = groups[group_name]
     h_statistic, p_value = kruskal(*[df[column] for column in columns])
@@ -70,13 +125,25 @@ def kruskal_wallis_test(df, groups, group_name):
 
 def calculate_fisher_discriminant_ratio(df):
     """
-    Calcula el ratio discriminante de Fisher para un DataFrame de datos numéricos.
+    Calculates the Fisher Discriminant Ratio for each numeric feature in the DataFrame.
 
     Parameters:
-    df (DataFrame): El DataFrame que contiene los datos numéricos.
+    df (pandas.DataFrame): The DataFrame containing the data. It is assumed that the column 'DeviceTimeStamp' 
+                           is not a numeric feature and will be dropped.
 
     Returns:
-    dict: Un diccionario que contiene el ratio discriminante de Fisher para cada característica.
+    dict: A dictionary where keys are feature names and values are the Fisher Discriminant Ratios for each feature.
+
+    Example:
+    >>> data = {
+    ...     'DeviceTimeStamp': [1, 2, 3, 4, 5],
+    ...     'Feature1': [1.1, 2.3, 3.3, 4.4, 5.5],
+    ...     'Feature2': [2.2, 3.4, 4.4, 5.5, 6.6],
+    ...     'Feature3': [3.3, 4.5, 5.5, 6.6, 7.7]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> calculate_fisher_discriminant_ratio(df)
+    {'Feature1': 0.0, 'Feature2': 0.0, 'Feature3': 0.0}
     """
     numeric_columns = df.drop('DeviceTimeStamp', axis=1)
     within_class_covariance = np.cov(numeric_columns, rowvar=False)
@@ -101,15 +168,27 @@ def calculate_fisher_discriminant_ratio(df):
 
 def calculate_auc_scores(df, features, group_name):
     """
-    Calcula los scores AUC para un grupo de características en un DataFrame.
+    Calculates the Area Under the ROC Curve (AUC) scores for specified features in the DataFrame.
 
     Parameters:
-    df (DataFrame): El DataFrame que contiene los datos.
-    features (list): La lista de características a utilizar.
-    group_name (str): El nombre del grupo de características.
+    df (pandas.DataFrame): The DataFrame containing the data.
+    features (list): A list of feature names to calculate AUC scores for.
+    group_name (str): The name of the group for which AUC scores are being calculated.
 
     Returns:
-    list: Una lista de scores AUC para cada característica del grupo.
+    list: A list of AUC scores for each feature.
+
+    Example:
+    >>> import pandas as pd
+    >>> data = {
+    ...     'Feature1': [0.1, 0.2, 0.3, 0.4, 0.5],
+    ...     'Feature2': [0.2, 0.3, 0.4, 0.5, 0.6],
+    ...     'Feature3': [0.3, 0.4, 0.5, 0.6, 0.7]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> features = ['Feature1', 'Feature2', 'Feature3']
+    >>> calculate_auc_scores(df, features, 'Group1')
+    [1.0, 1.0, 1.0]
     """
     auc_scores = []
     for feature_name in features:
@@ -124,14 +203,33 @@ def calculate_auc_scores(df, features, group_name):
 
 def calculate_correlation_with_target(df, target_variables):
     """
-    Calcula el coeficiente de correlación entre las variables numéricas y las variables objetivo.
+    Calculates the correlation between numeric features and target variables in the DataFrame.
 
     Parameters:
-    df (DataFrame): El DataFrame que contiene los datos.
-    target_variables (list): La lista de variables objetivo para las cuales se calculará la correlación.
+    df (pandas.DataFrame): The DataFrame containing the data.
+    target_variables (list): A list of target variable names.
 
     Returns:
-    dict: Un diccionario que contiene el coeficiente de correlación de cada variable numérica con cada variable objetivo.
+    dict: A dictionary where keys are target variable names and values are Series containing
+          correlation coefficients between numeric features and the corresponding target variable.
+
+    Example:
+    >>> import pandas as pd
+    >>> data = {
+    ...     'DeviceTimeStamp': [1, 2, 3, 4, 5],
+    ...     'Feature1': [1.1, 2.3, 3.3, 4.4, 5.5],
+    ...     'Feature2': [2.2, 3.4, 4.4, 5.5, 6.6],
+    ...     'Target1': [0, 1, 0, 1, 0],
+    ...     'Target2': [1, 0, 1, 0, 1]
+    ... }
+    >>> df = pd.DataFrame(data)
+    >>> target_variables = ['Target1', 'Target2']
+    >>> calculate_correlation_with_target(df, target_variables)
+    {'Target1': Feature1    0.447214
+    Feature2   -0.447214
+    dtype: float64, 'Target2': Feature1   -0.447214
+    Feature2    0.447214
+    dtype: float64}
     """
     numeric_columns = df.drop('DeviceTimeStamp', axis=1)
     correlation_results = {}
@@ -142,10 +240,16 @@ def calculate_correlation_with_target(df, target_variables):
 
 def random_forest_classifier(df):
     """
-    Trains a Random Forest Classifier model to predict faults based on phase currents.
+    Trains a random forest classifier to predict faults based on current values.
 
     Parameters:
-    df (DataFrame): DataFrame containing the dataset with relevant columns.
+    df (pandas.DataFrame): The DataFrame containing the data. It is assumed that the DataFrame
+                           contains columns named 'Phase 1 Current', 'Phase 2 Current', and 'Phase 3 Current'.
+
+    Prints:
+    - Confusion matrix
+    - Classification report
+    - Model accuracy
 
     Returns:
     None

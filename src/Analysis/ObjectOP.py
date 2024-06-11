@@ -1,17 +1,50 @@
 import math, time
 class DataBaseCheck:
+  """
+    Class for checking the validity of the database.
+  """
   def __init__(self,DB:list):
+    """
+        Initialize the DataBaseCheck object.
+
+        Parameters:
+        DB (list): The database to be checked.
+
+        Attributes:
+        __DB__ (list): The database.
+        __boolean__ (bool): True if the database is a list, False otherwise.
+    """
     self.__DB__ = DB
     self.__boolean__ = self.__check__()
 
   def __check__(self):
+    """
+        Check if the database is a list.
+
+        Returns:
+        bool: True if the database is a list, False otherwise.
+    """
     if isinstance(self.__DB__,list):
       return True
     else:
       return False
 
 class DelZeros(DataBaseCheck):
+  """
+    Class for deleting rows with all zero values in specified columns.
+  """
   def __init__(self,DB:list,Columns:list):
+    """
+        Initialize the DelZeros object.
+
+        Parameters:
+        DB (list): The database.
+        Columns (list): The columns to check for zeros.
+
+        Attributes:
+        __Columns__ (list): The columns to check for zeros.
+        __DBZ__ (list): The database after removing rows with all zero values.
+    """
     super().__init__(DB)
     self.__Columns__ = Columns
     st = time.time()
@@ -20,6 +53,12 @@ class DelZeros(DataBaseCheck):
     print(f'Elapsed execution time for DeleteZeros: {(et-st)*1000} ms\n')
 
   def __deleteZeros__(self):
+    """
+        Delete rows with all zero values in specified columns.
+
+        Returns:
+        list: The modified database.
+    """
     try:
       if not self.__boolean__:
         raise TypeError("The database must be List type")
@@ -30,16 +69,40 @@ class DelZeros(DataBaseCheck):
     return(Temp_DBZ)
 
   def getDBZ(self):
+    """
+        Get the database after deleting rows with all zero values.
+
+        Returns:
+        list: The modified database.
+    """
     return self.__DBZ__
 
 class PowerCalculation(DataBaseCheck):
+  """
+    Class for calculating power per record in the database.
+  """
   def __init__(self,DB:list):
+    """
+        Initialize the PowerCalculation object.
+
+        Parameters:
+        DB (list): The database.
+
+        Attributes:
+        __Powers__ (list): The calculated powers for each record.
+    """
     super().__init__(DB)
     st = time.time()
     self.__Powers__ = self.__calculate_power_per_record__()
     et = time.time()
     print(f'Elapsed execution time for PowerCalculation: {(et-st)*1000} ms\n')
   def __calculate_power_per_record__(self):
+    """
+        Calculate power for each record in the database.
+
+        Returns:
+        list: The list of calculated powers.
+    """
     try:
       if not self.__boolean__:
         raise TypeError("The database must be List type")
@@ -66,10 +129,31 @@ class PowerCalculation(DataBaseCheck):
     return Powers
 
   def getPowers(self):
+    """
+        Get the calculated powers.
+
+        Returns:
+        list: The list of calculated powers.
+    """
     return self.__Powers__
 
 class StandardDeviaton(DataBaseCheck):
+    """
+    Class for calculating the standard deviation of currents in the database.
+    """
     def __init__(self,DB):
+        """
+        Initialize the StandardDeviaton object.
+
+        Parameters:
+        DB (list): The database.
+
+        Attributes:
+        __n__ (int): Number of records in the database.
+        __avg__ (list): Average currents.
+        __SD__ (list): Standard deviations of currents.
+        __Limits__ (list): Upper and lower limits based on standard deviations.
+        """
         super().__init__(DB)
         self.__n__ = len(self.__DB__[1:])
         st = time.time()
@@ -79,6 +163,12 @@ class StandardDeviaton(DataBaseCheck):
         et = time.time()
         print(f'Elapsed execution time for StandardDeviaton : {(et-st)*1000} ms\n')
     def __average__(self):
+        """
+        Calculate the average currents.
+
+        Returns:
+        list: The list of average currents.
+        """
         try:
             if not self.__boolean__:
                 raise TypeError("The database must be List type")
@@ -99,6 +189,12 @@ class StandardDeviaton(DataBaseCheck):
         return [I1_sum / self.__n__, I2_sum / self.__n__, I3_sum / self.__n__]
 
     def __standadDeviaton__(self):
+        """
+        Calculate the standard deviations of currents.
+
+        Returns:
+        list: The list of standard deviations.
+        """
         try:
             if not self.__boolean__:
                 raise TypeError("The database must be List type")
@@ -117,19 +213,64 @@ class StandardDeviaton(DataBaseCheck):
         return [round(math.sqrt(DistMediaI1_sum / self.__n__),2), round(math.sqrt(DistMediaI2_sum / self.__n__),2), round(math.sqrt(DistMediaI3_sum / self.__n__),2)]
 
     def __limits__(self):
+        """
+        Calculate the upper and lower limits based on standard deviations.
+
+        Returns:
+        list: The list of limits for each current.
+        """
         return [[self.__avg__[0] + self.__SD__[0], self.__avg__[0] - self.__SD__[0]],[self.__avg__[1] + self.__SD__[1], self.__avg__[1] - self.__SD__[1]],[self.__avg__[2] + self.__SD__[2],self.__avg__[2] - self.__SD__[2]]]
 
     def getSD(self):
+        """
+        Get the standard deviations.
+
+        Returns:
+        list: The list of standard deviations.
+        """
         return self.__SD__
 
     def getavg(self):
+        """
+        Get the average currents.
+
+        Returns:
+        list: The list of average currents.
+        """
         return self.__avg__
 
     def getLimits(self):
+        """
+        Get the limits for each current.
+
+        Returns:
+        list: The list of limits.
+        """
         return self.__Limits__
 
 class DataBaseHandling:
+    """
+    Class for handling the database operations.
+    """
     def __init__(self,path:str,I1=4,I2=5,I3=6):
+        """
+        Initialize the DataBaseHandling object.
+
+        Parameters:
+        path (str): The path to the database file.
+        I1 (int): The index of the first current column. Default is 4.
+        I2 (int): The index of the second current column. Default is 5.
+        I3 (int): The index of the third current column. Default is 6.
+
+        Attributes:
+        __Path__ (str): The path to the database file.
+        __I_Columns__ (list): The list of current column indices.
+        __DB__ (list): The imported database.
+        __DBZ__ (DelZeros): The database after deleting rows with all zeros.
+        __PW__ (PowerCalculation): The power calculations.
+        Power (list): The list of powers.
+        __SD__ (StandardDeviaton): The standard deviation calculations.
+        """
         self.__Path__ = path
         self.__I_Columns__ = [I1,I2,I3]
         self.__DB__ = self.__importDB__(self.__Path__)
@@ -139,6 +280,15 @@ class DataBaseHandling:
         self.__SD__ = StandardDeviaton(self.__DBZ__.getDBZ())
 
     def __importDB__(self,path:str):
+        """
+        Import the database from a file.
+
+        Parameters:
+        path (str): The path to the database file.
+
+        Returns:
+        list: The imported database.
+        """
         try:
             fhand = open(path)
         except:
@@ -152,15 +302,42 @@ class DataBaseHandling:
         return(DB)
 
     def getDB (self):
+        """
+        Get the imported database.
+
+        Returns:
+        list: The imported database.
+        """
         return self.__DB__
 
     def getDBZ (self):
+        """
+        Get the database after deleting rows with all zero values.
+
+        Returns:
+        list: The modified database.
+        """
         return self.__DBZ__.getDBZ()
 
     def getPowers (self):
+        """
+        Get the calculated powers.
+
+        Returns:
+        list: The list of calculated powers.
+        """
         return self.__PW__.getPowers()
 
     def getSD (self,index:int=0):
+      """
+        Get the standard deviation information.
+
+        Parameters:
+        index (int): The type of information to get. 0 for standard deviations, 1 for limits, 2 for averages.
+
+        Returns:
+        list: The requested information.
+      """
       if index == 0:
         return self.__SD__.getSD()
       elif index == 1:

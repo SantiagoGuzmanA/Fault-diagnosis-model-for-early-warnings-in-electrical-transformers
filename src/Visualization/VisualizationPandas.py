@@ -7,10 +7,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 def plot_histograms(df):
     """
-    Plots histograms, distribution plots, density plots, boxplots, and violin plots for specified features.
+    Plots histograms, density plots, boxplots, and violin plots for different variables in the DataFrame.
 
     Parameters:
-    df (DataFrame): DataFrame containing the dataset with relevant columns.
+    df (pandas.DataFrame): The DataFrame containing the data.
 
     Returns:
     None

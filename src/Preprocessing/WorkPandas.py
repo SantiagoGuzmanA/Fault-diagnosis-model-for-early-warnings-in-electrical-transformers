@@ -1,13 +1,20 @@
 import pandas as pd
 def process_transformer_data(file_path):
     """
-    Procesa el archivo de datos de monitoreo de transformadores.
+    Processes transformer data from a CSV file.
 
     Parameters:
-    file_path (str): Ruta al archivo de datos CSV.
+    file_path (str): The file path to the CSV file containing transformer data.
 
     Returns:
-    DataFrame: Un DataFrame con los datos procesados.
+    tuple: A tuple containing three DataFrames:
+           1. The original DataFrame read from the CSV file.
+           2. A DataFrame with columns renamed for clarity.
+           3. A DataFrame with rows filtered where phase currents are not zero.
+
+    Example:
+    >>> process_transformer_data("transformer_data.csv")
+    (original_df, renamed_df, filtered_df)
     """
     # Leer el archivo CSV
     df = pd.read_csv(file_path, sep=",")
