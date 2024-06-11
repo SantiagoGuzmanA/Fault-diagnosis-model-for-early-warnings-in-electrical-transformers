@@ -2,6 +2,7 @@
 ### README en `src`
 
 ```markdown
+```
 # src
 
 Este directorio contiene todos los códigos fuente en Python utilizados para el diagnóstico de fallas en transformadores eléctricos.
