@@ -4,7 +4,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..
 sys.path.append(project_root)
 from src.Preprocessing.WorkPandas import*
 from src.Analysis.AnalysisPandas import*
-
+from src.Visualization.VisualizationPandas import*
 file_path = "DatosMonitoringTransformer.txt"
 df, dfRename, dfZeros = process_transformer_data(file_path)
 groups = {
@@ -76,3 +76,5 @@ for target_variable, correlation_with_target in correlation_results.items():
     print()
 #Random Forest Classifier
 random_forest_classifier(dfRename)
+#Visualization
+plot_histograms(dfZeros)
