@@ -2,165 +2,193 @@ from scipy.stats import shapiro
 from scipy.stats import kstest
 from scipy.stats import kruskal
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 import numpy as np
 import sys
 import os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.append(project_root)
-from src.Visualization.VisualizationPandas import*
 from src.Preprocessing.WorkPandas import*
-#Shapiro-Wilk Test for Phase Voltages:
-shapiro_results = {}
-for group, columns in [("Phase Voltages", voltage_features),
-                       ("Phase Currents", current_features),
-                       ("Voltage Differences", difference_features)]:
-    shapiro_results[group] = {}
-    for column in columns:
-        result = shapiro(dfZeros[column])
-        shapiro_results[group][column] = result
 
-for group, results in shapiro_results.items():
-    print(f"Shapiro-Wilk Test for {group}:")
-    print("\n")
-    for column, result in results.items():
-        print(f"{column}: W-statistic = {result.statistic}, p-value = {result.pvalue}")
-#Shapiro-Wilk Test for Phase Currents:
-phase_1_current = dfZeros["Phase 1 Current"]
-phase_2_current = dfZeros["Phase 2 Current"]
-phase_3_current = dfZeros["Phase 3 Current"]
+def shapiro_tests(df, groups_dict):
+    """
+    Realiza la prueba de Shapiro-Wilk para varios grupos de columnas.
 
-shapiro_result_phase_1 = shapiro(phase_1_current)
-shapiro_result_phase_2 = shapiro(phase_2_current)
-shapiro_result_phase_3 = shapiro(phase_3_current)
+    Parameters:
+    df (DataFrame): El DataFrame con los datos a probar.
+    groups_dict (dict): Un diccionario que mapea los nombres de los grupos a las listas de columnas correspondientes.
 
-print("Shapiro-Wilk Test for Phase Currents:")
-print("\n")
-#print("Shapiro-Wilk Test for phase 1 current: ", shapiro_result_phase_1)
-print(f"Phase 1 Current: W-statistic = {shapiro_result_phase_1.statistic}, p-value = {shapiro_result_phase_1.pvalue}")
-print(f"Phase 2 Current: W-statistic = {shapiro_result_phase_2.statistic}, p-value = {shapiro_result_phase_2.pvalue}")
-print(f"Phase 3 Current: W-statistic = {shapiro_result_phase_3.statistic}, p-value = {shapiro_result_phase_3.pvalue}")
-#Kolmogorov-Smirnov Test for Phase Voltages:
-ks_results = {}
-for group, columns in [("Phase Voltages", voltage_features),
-                       ("Phase Currents", current_features),
-                       ("Voltage Differences", difference_features)]:
-    ks_results[group] = {}
-    for column in columns:
-        result = kstest(dfZeros[column], 'norm')
-        ks_results[group][column] = result
+    Returns:
+    dict: Diccionario anidado con los resultados de la prueba de Shapiro-Wilk para cada grupo y columna.
+    """
+    shapiro_results = {}
+    for group, columns in groups_dict.items():
+        shapiro_results[group] = {}
+        for column in columns:
+            result = shapiro(df[column])
+            shapiro_results[group][column] = result
+    
+    return shapiro_results
 
-for group, results in ks_results.items():
-    print(f"Kolmogorov-Smirnov Test for {group}:")
-    for column, result in results.items():
-        print(f"{column}: KS-statistic = {result.statistic}, p-value = {result.pvalue}")
-#Kruskal-Wallis Test:
-h_statistic, p_value = kruskal(dfZeros['Phase 1 Current'], dfZeros['Phase 2 Current'], dfZeros['Phase 3 Current'])
+def kstest_multiple_groups(df, groups_dict, distribution='norm'):
+    """
+    Realiza el test de Kolmogorov-Smirnov para varios grupos de columnas.
 
-print("Kruskal-Wallis Test:")
-print(f"H-statistic: {h_statistic}")
-print(f"P-value: {p_value}")
+    Parameters:
+    df (DataFrame): El DataFrame con los datos a probar.
+    groups_dict (dict): Un diccionario que mapea los nombres de los grupos a las listas de columnas correspondientes.
+    distribution (str, optional): La distribución a comparar con los datos. Por defecto es 'norm' para distribución normal.
 
-alpha = 0.05
-if p_value < alpha:
-    print("Reject the null hypothesis. There is a significant difference between the groups.")
-else:
-    print("Fail to reject the null hypothesis. There is no significant difference between the groups.")
-#Quantitative separability
-#fisher
-numeric_columns = dfZeros.drop('DeviceTimeStamp', axis=1)
-within_class_covariance = np.cov(numeric_columns, rowvar=False)
-within_class_covariance = within_class_covariance.T
+    Returns:
+    dict: Diccionario anidado con los resultados del test de Kolmogorov-Smirnov para cada grupo y columna.
+    """
+    ks_results = {}
+    for group, columns in groups_dict.items():
+        ks_results[group] = {}
+        for column in columns:
+            result = kstest(df[column], distribution)
+            ks_results[group][column] = result
+    
+    return ks_results
 
-overall_mean = numeric_columns.mean()
-print('Overall mean of feature j:\n')
-print(overall_mean)
+def kruskal_wallis_test(df, groups, group_name):
+    """
+    Realiza el test de Kruskal-Wallis para comparar varias muestras independientes.
 
-between_class_scatter = np.zeros_like(within_class_covariance)
-for column in numeric_columns.columns:
-    column_data = numeric_columns[column]
-    column_mean = column_data.mean()
-    n = len(column_data)
-    between_class_scatter += n * np.outer((column_mean - overall_mean), (column_mean - overall_mean))
+    Parámetros:
+    df (DataFrame): El DataFrame que contiene los datos a comparar.
+    columns (list): La lista de columnas que representan las muestras a comparar.
 
-fisher_discriminant_ratio = np.diag(np.dot(np.linalg.inv(within_class_covariance), between_class_scatter))
+    Retorna:
+    tuple: Una tupla que contiene el estadístico H y el valor p del test de Kruskal-Wallis.
+    """
+    columns = groups[group_name]
+    h_statistic, p_value = kruskal(*[df[column] for column in columns])
+    return h_statistic, p_value
 
-print('\nFisher Discriminant Ratio:\n')
-for i, feature in enumerate(numeric_columns.columns):
-    print(f"{feature}: {fisher_discriminant_ratio[i]}")
-#AUC
-auc_scores = []
+def calculate_fisher_discriminant_ratio(df):
+    """
+    Calcula el ratio discriminante de Fisher para un DataFrame de datos numéricos.
 
-def calculate_auc(feature_values, target):
-    if len(np.unique(target)) == 1:
-        print("Only one class present in the target variable. Skipping AUC calculation.")
-        return
-    auc_score = roc_auc_score(target, feature_values)
-    auc_scores.append(auc_score)
+    Parameters:
+    df (DataFrame): El DataFrame que contiene los datos numéricos.
 
-for group_name, group_features in zip(['Voltage', 'Current', 'Difference'],
-                                      [voltage_features, current_features, difference_features]):
-    print(f"AUC scores for {group_name} features:")
-    for feature_name in group_features:
-        feature_values = dfZeros[feature_name]
+    Returns:
+    dict: Un diccionario que contiene el ratio discriminante de Fisher para cada característica.
+    """
+    numeric_columns = df.drop('DeviceTimeStamp', axis=1)
+    within_class_covariance = np.cov(numeric_columns, rowvar=False)
+    within_class_covariance = within_class_covariance.T
+
+    overall_mean = numeric_columns.mean()
+
+    between_class_scatter = np.zeros_like(within_class_covariance)
+    for column in numeric_columns.columns:
+        column_data = numeric_columns[column]
+        column_mean = column_data.mean()
+        n = len(column_data)
+        between_class_scatter += n * np.outer((column_mean - overall_mean), (column_mean - overall_mean))
+
+    fisher_discriminant_ratio = np.diag(np.dot(np.linalg.inv(within_class_covariance), between_class_scatter))
+
+    fisher_ratios = {}
+    for i, feature in enumerate(numeric_columns.columns):
+        fisher_ratios[feature] = fisher_discriminant_ratio[i]
+
+    return fisher_ratios
+
+def calculate_auc_scores(df, features, group_name):
+    """
+    Calcula los scores AUC para un grupo de características en un DataFrame.
+
+    Parameters:
+    df (DataFrame): El DataFrame que contiene los datos.
+    features (list): La lista de características a utilizar.
+    group_name (str): El nombre del grupo de características.
+
+    Returns:
+    list: Una lista de scores AUC para cada característica del grupo.
+    """
+    auc_scores = []
+    for feature_name in features:
+        feature_values = df[feature_name]
         target = (feature_values > feature_values.mean()).astype(int)
-        calculate_auc(feature_values, target)
+        if len(np.unique(target)) == 1:
+            print(f"Only one class present in {feature_name}. Skipping AUC calculation for {group_name}.")
+        else:
+            auc_score = roc_auc_score(target, feature_values)
+            auc_scores.append(auc_score)
+    return auc_scores
 
-for group_name, group_features in zip(['Voltage', 'Current', 'Difference'],
-                                      [voltage_features, current_features, difference_features]):
-    print(f"\nAUC scores for {group_name} features:")
-    for feature_name, auc_score in zip(group_features, auc_scores):
-        print(f"AUC for {feature_name}: {auc_score}")
-#cORRELATION COEFFICIENTE
-target_variables = ["Phase 1 Current", "Phase 2 Current", "Phase 3 Current"]
+def calculate_correlation_with_target(df, target_variables):
+    """
+    Calcula el coeficiente de correlación entre las variables numéricas y las variables objetivo.
 
-for target_variable in target_variables:
+    Parameters:
+    df (DataFrame): El DataFrame que contiene los datos.
+    target_variables (list): La lista de variables objetivo para las cuales se calculará la correlación.
 
-    correlation_with_target = numeric_columns.corrwith(dfZeros[target_variable])
+    Returns:
+    dict: Un diccionario que contiene el coeficiente de correlación de cada variable numérica con cada variable objetivo.
+    """
+    numeric_columns = df.drop('DeviceTimeStamp', axis=1)
+    correlation_results = {}
+    for target_variable in target_variables:
+        correlation_with_target = numeric_columns.corrwith(df[target_variable])
+        correlation_results[target_variable] = correlation_with_target
+    return correlation_results
 
-    print("Correlation with target variable '{}':".format(target_variable))
-    print(correlation_with_target)
-    print()
-#Random Forest Classifier
-class Column():
-  def  __init__(self,df,columnName):
-    self.column = df[columnName]
-    self.mean = self.column.mean()
-    self.mode = self.column.mode()
-    self.median = self.column.median()
-    self.Q1 = self.column.quantile(0.25)
-    self.Q3 = self.column.quantile(0.75)
-    self.std = self.column.std()
-    self.IQR = self.Q3 - self.Q1
-    self.lower_bound = self.mean - self.std
-    self.upper_bound = self.mean + self.std
+def random_forest_classifier(df):
+    """
+    Trains a Random Forest Classifier model to predict faults based on phase currents.
 
-I1N = Column(dfRename,"Phase 1 Current")
-I2N = Column(dfRename,"Phase 2 Current")
-I3N = Column(dfRename,"Phase 3 Current")
+    Parameters:
+    df (DataFrame): DataFrame containing the dataset with relevant columns.
 
-dfRename["Fault"] = ((dfRename["Phase 1 Current"] < I1N.lower_bound) | (dfRename["Phase 1 Current"] > I1N.upper_bound) | (dfRename["Phase 2 Current"] < I2N.lower_bound) | (dfRename["Phase 2 Current"] > I2N.upper_bound) | (dfRename["Phase 3 Current"] < I3N.lower_bound) | (dfRename["Phase 3 Current"] > I3N.upper_bound)).astype(int)
+    Returns:
+    None
+    """
+    class Column():
+        def __init__(self, df, columnName):
+            self.column = df[columnName]
+            self.mean = self.column.mean()
+            self.mode = self.column.mode()
+            self.median = self.column.median()
+            self.Q1 = self.column.quantile(0.25)
+            self.Q3 = self.column.quantile(0.75)
+            self.std = self.column.std()
+            self.IQR = self.Q3 - self.Q1
+            self.lower_bound = self.mean - self.std
+            self.upper_bound = self.mean + self.std
 
-dfRename.head(10)
+    I1N = Column(df, "Phase 1 Current")
+    I2N = Column(df, "Phase 2 Current")
+    I3N = Column(df, "Phase 3 Current")
 
-X = dfRename[["Phase 1 Current", "Phase 2 Current","Phase 3 Current"]]
-y = dfRename["Fault"]
+    df["Fault"] = ((df["Phase 1 Current"] < I1N.lower_bound) |
+                   (df["Phase 1 Current"] > I1N.upper_bound) |
+                   (df["Phase 2 Current"] < I2N.lower_bound) |
+                   (df["Phase 2 Current"] > I2N.upper_bound) |
+                   (df["Phase 3 Current"] < I3N.lower_bound) |
+                   (df["Phase 3 Current"] > I3N.upper_bound)).astype(int)
 
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X = df[["Phase 1 Current", "Phase 2 Current", "Phase 3 Current"]]
+    y = df["Fault"]
 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-model = RandomForestClassifier(random_state=42)
-model.fit(X_train, y_train)
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
 
-y_pred = model.predict(X_test)
+    y_pred = model.predict(X_test)
 
-print("Confusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
+    print("Confusion Matrix:")
+    print(confusion_matrix(y_test, y_pred))
 
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
 
-print("\nModel Accuracy:")
-print(accuracy_score(y_test, y_pred))
+    print("\nModel Accuracy:")
+    print(accuracy_score(y_test, y_pred))
