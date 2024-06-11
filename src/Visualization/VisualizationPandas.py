@@ -4,7 +4,6 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..
 sys.path.append(project_root)
 from src.Preprocessing.WorkPandas import*
 import matplotlib.pyplot as plt
-#import scipy.stats as stats
 import seaborn as sns
 def plot_histograms(df):
     """
