@@ -5,7 +5,7 @@ sys.path.append(project_root)
 from src.Preprocessing.WorkPandas import*
 from src.Analysis.AnalysisPandas import*
 from src.Visualization.VisualizationPandas import*
-file_path = "DatosMonitoringTransformer.txt"
+file_path = os.path.join(project_root, 'data', 'raw', 'DatosMonitoringTransformer.txt')
 df, dfRename, dfZeros = process_transformer_data(file_path)
 groups = {
         "Phase Voltages": ["Phase 1 Voltage", "Phase 2 Voltage", "Phase 3 Voltage"],
