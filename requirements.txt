@@ -1,5 +1,3 @@
-sys
-os
 numpy
 matplotlib
 seaborn
