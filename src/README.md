@@ -33,14 +33,14 @@ cd Fault-diagnosis-model-for-early-warnings-in-electrical-transformers
 
 **3. Install dependencies:**
 Make sure that the requirements.txt file is located in the path Fault diagnosis model for early warnings in electrical transformers and contains the following lines:
-```bash
-numpy
-matplotlib
-seaborn
-pandas
-scipy
-scikit-learn
-```
+
+- numpy
+- matplotlib
+- seaborn
+- pandas
+- scipy
+- scikit-learn
+
 Then, install the dependencies using pip:
 ```bash
 pip install -r requirements.txt
@@ -49,6 +49,8 @@ pip install -r requirements.txt
 **4. Run the project:**
 Once the dependencies are installed, you can run the main project script. It is the main input file to run the Main.py and MainPandas.py project. run:
 ```bash
-python src/Analysis/Main.py
+python src/Analysis/MainPandas.py
+```
+```bash
 python src/Analysis/MainPandas.py
 ```
