@@ -45,18 +45,16 @@ python3 -m venv env
 5. Install dependencies:
 Make sure that the requirements.txt file is located in the path Fault diagnosis model for early warnings in electrical transformers and contains the following lines:
 ```bash
-sys
-os
 numpy
 matplotlib
 seaborn
 pandas
 scipy
-sklearn
+scikit-learn
 ```
 Then, install the dependencies using pip:
 ```bash
-pip install -r "Fault diagnosis model for early warnings in electrical transformers/requirements.txt"
+pip install -r requirements.txt
 ```
 
 6. Run the project:
