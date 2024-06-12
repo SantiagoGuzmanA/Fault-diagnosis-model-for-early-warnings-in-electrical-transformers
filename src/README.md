@@ -1,25 +1,21 @@
-# Proyecto1
-### README en `src`
-
-```markdown
-```
-# src
+# Fault Diagnosis Model for Early Warnings in Electrical Transformers
+# SRC
 
 ## Environment Configuration
-
 ### System Requirements
-- Python 3.x
+```
+- Python 3.12.0
 - Bookstores: sys, os, numpy, matplotlib, seaborn, pandas, math, time, scipy, sklearn
+```
 
 
 ### Installation of Dependencies
 ```bash
-git clone https://github.com/tu_usuario/Fault-diagnosis-model-for-early-warnings-in-electrical-transformers.git
+git clone https://github.com/SantiagoGuzmanA/Fault-diagnosis-model-for-early-warnings-in-electrical-transformers.git
 cd Fault-diagnosis-model-for-early-warnings-in-electrical-transformers
 python -m venv venv
 source venv/bin/activate  # En Windows: venv\Scripts\activate
 pip install -r requirements.txt
-Fundamentación Teórica
 ```
 
 Este directorio contiene todos los códigos fuente en Python utilizados para el diagnóstico de fallas en transformadores eléctricos.
