@@ -5,6 +5,23 @@
 ```
 # src
 
+## Environment Configuration
+
+### System Requirements
+- Python 3.x
+- Bookstores: sys, os, numpy, matplotlib, seaborn, pandas, math, time, scipy, sklearn
+
+
+### Installation of Dependencies
+```bash
+git clone https://github.com/tu_usuario/Fault-diagnosis-model-for-early-warnings-in-electrical-transformers.git
+cd Fault-diagnosis-model-for-early-warnings-in-electrical-transformers
+python -m venv venv
+source venv/bin/activate  # En Windows: venv\Scripts\activate
+pip install -r requirements.txt
+Fundamentación Teórica
+```
+
 Este directorio contiene todos los códigos fuente en Python utilizados para el diagnóstico de fallas en transformadores eléctricos.
 
 ## Descripción de Archivos
