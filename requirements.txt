@@ -1,14 +1,8 @@
 sys
 os
-numpy as np
-matplotlib.pyplot as plt
-seaborn as sns
-pandas as pd
-math, time
-scipy.stats import shapiro
-scipy.stats import kstest
-scipy.stats import kruskal
-sklearn.metrics import roc_auc_score
-sklearn.model_selection import train_test_split
-sklearn.ensemble import RandomForestClassifier
-sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+numpy
+matplotlib
+seaborn
+pandas
+scipy
+sklearn
