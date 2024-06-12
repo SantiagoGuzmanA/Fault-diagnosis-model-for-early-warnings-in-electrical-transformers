@@ -12,7 +12,7 @@ from src.Analysis.PowerCalculation import*
 from src.Analysis.StandarDeviation import*
 from src.Analysis.AtypicalValues import*
 
-fname = "DatosMonitoringTransformer.txt"
+fname = os.path.join(project_root, 'data', 'raw', 'DatosMonitoringTransformer.txt')
 column = [4, 5, 6]
 # Import database
 DB = impDB(fname)

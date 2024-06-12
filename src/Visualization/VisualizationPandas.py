@@ -18,13 +18,14 @@ def plot_histograms(df):
     df.hist(figsize=(10, 8))
     plt.title('Histograms of each variable')
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Histograms of each variable.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
     voltage_features = ["Phase 1 Voltage", "Phase 2 Voltage", "Phase 3 Voltage"]
     current_features = ["Phase 1 Current", "Phase 2 Current", "Phase 3 Current"]
     difference_features = ["1-2 Voltage", "2-3 Voltage", "3-1 Voltage"]
 
-    plt.figure(figsize=(25, 5))
+    plt.figure(figsize=(20, 10))
 
     for feature in voltage_features:
         sns.histplot(data=df, x=feature, kde=False, alpha=0.7, label=feature)
@@ -34,9 +35,10 @@ def plot_histograms(df):
     plt.ylabel('Frequency')
     plt.legend(loc='upper left')
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Histogram of Phase Voltage.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
-    plt.figure(figsize=(25, 5))
+    plt.figure(figsize=(20, 10))
 
     for feature in current_features:
         sns.histplot(data=df, x=feature, kde=True, alpha=0.7, label=feature)
@@ -46,9 +48,10 @@ def plot_histograms(df):
     plt.ylabel('Frequency')
     plt.legend()
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Histogram of Phase Current.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
-    plt.figure(figsize=(25, 5))
+    plt.figure(figsize=(20, 10))
 
     for feature in difference_features:
         sns.kdeplot(data=df, x=feature, fill=True, alpha=0.5,  linewidth=0.5, label=feature)
@@ -58,7 +61,8 @@ def plot_histograms(df):
     plt.ylabel('Frequency')
     plt.legend(loc='upper left')
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Histogram of Voltage Differences.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
     feature_groups = {
         'Phase Voltages': voltage_features,
@@ -78,7 +82,8 @@ def plot_histograms(df):
         plt.legend(loc='upper center')
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Density Plot of.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
     plt.figure(figsize=(15, 5))
 
@@ -91,7 +96,8 @@ def plot_histograms(df):
         plt.xticks(ticks=range(len(features)), labels=features)
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Boxplot of.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
     plt.figure(figsize=(15, 5))
 
@@ -104,4 +110,5 @@ def plot_histograms(df):
         plt.xticks(ticks=range(len(features)), labels=features)
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig('results//figures//Violin Plot of.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()

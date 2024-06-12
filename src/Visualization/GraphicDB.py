@@ -27,7 +27,7 @@ def plot_column(DataBase,column_G):
     plt.title('Line 1 Current Graph')
     plt.grid(True)
     plt.savefig('results//figures//Line 1 Current Graph.png',bbox_inches='tight',pad_inches=0.05)
-    plt.show()
+    #plt.show()
     plt.close()
 
 def plot_column1(DataBase,column_G1):
@@ -52,7 +52,8 @@ def plot_column1(DataBase,column_G1):
     plt.ylabel('Current 2')
     plt.title('Line 2 Current Graph')
     plt.grid(True)
-    plt.show()
+    plt.savefig('results//figures//Line 2 Current Graph.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
 
 def plot_column2(DataBase, column_G2):
     """
@@ -76,8 +77,9 @@ def plot_column2(DataBase, column_G2):
     plt.ylabel('Current 3')
     plt.title('Line 3 Current Graph')
     plt.grid(True)
-    plt.show()
-
+    plt.savefig('results//figures//Line 3 Current Graph.png',bbox_inches='tight',pad_inches=0.05)
+    #plt.show()
+    
 def plot_power_bar(DataBase):
     """
     Plots a bar graph of power per record.
