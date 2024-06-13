@@ -1,8 +1,6 @@
-sys
-os
 numpy
 matplotlib
 seaborn
 pandas
 scipy
-sklearn
+scikit-learn
