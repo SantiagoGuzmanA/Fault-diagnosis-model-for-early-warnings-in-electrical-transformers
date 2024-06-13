@@ -21,9 +21,8 @@ def shapiro_tests(df, groups_dict):
     groups_dict (dict): A dictionary where keys are group names and values are lists of column names to test.
 
     Returns:
-    dict: A nested dictionary where the first level keys are group names, 
+    dict: A nested dictionary where the first level are group names, 
           the second level keys are column names, and the values are Shapiro-Wilk test results.
-
     Example:
     >>> import pandas as pd
     >>> data = {
@@ -63,9 +62,9 @@ def kstest_multiple_groups(df, groups_dict, distribution='norm'):
     distribution (str): The distribution to test against. Default is 'norm' for the normal distribution.
 
     Returns:
-    dict: A nested dictionary where the first level keys are group names, 
+    dict: A nested dictionary where the first level are group names, 
           the second level keys are column names, and the values are Kolmogorov-Smirnov test results.
-
+         
     Example:
     >>> import pandas as pd
     >>> data = {
@@ -101,13 +100,13 @@ def kruskal_wallis_test(df, groups, group_name):
 
     Parameters:
     df (pandas.DataFrame): The DataFrame containing the data.
-    groups (dict): A dictionary where keys are group names and values are lists of column names to test.
+    groups (dict): A dictionary where are group names and values are lists of column names to test.
     group_name (str): The name of the group to test.
 
     Returns:
     tuple: A tuple containing the H statistic and the p-value of the test.
-
-    Example:
+    
+     Example:
     >>> import pandas as pd
     >>> data = {
     ...     'A': [1.1, 2.3, 3.3, 4.4, 5.5],
@@ -132,8 +131,7 @@ def calculate_fisher_discriminant_ratio(df):
                            is not a numeric feature and will be dropped.
 
     Returns:
-    dict: A dictionary where keys are feature names and values are the Fisher Discriminant Ratios for each feature.
-
+    dict: A dictionary where are feature names and values are the Fisher Discriminant Ratios for each feature.
     Example:
     >>> data = {
     ...     'DeviceTimeStamp': [1, 2, 3, 4, 5],
@@ -177,7 +175,7 @@ def calculate_auc_scores(df, features, group_name):
 
     Returns:
     list: A list of AUC scores for each feature.
-
+    
     Example:
     >>> import pandas as pd
     >>> data = {
@@ -210,7 +208,7 @@ def calculate_correlation_with_target(df, target_variables):
     target_variables (list): A list of target variable names.
 
     Returns:
-    dict: A dictionary where keys are target variable names and values are Series containing
+    dict: A dictionary where are target variable names and values are Series containing
           correlation coefficients between numeric features and the corresponding target variable.
 
     Example:

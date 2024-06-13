@@ -11,6 +11,9 @@ def plot_column(DataBase,column_G):
     Parameters:
     DataBase (list): The database containing the data.
     column_G (int): The index of the column to plot.
+    
+    Prints:
+    Project graphs and figures
 
     Returns:
     None
@@ -37,6 +40,9 @@ def plot_column1(DataBase,column_G1):
     Parameters:
     DataBase (list): The database containing the data.
     column_G1 (int): The index of the column to plot.
+    
+    Prints:
+    Project graphs and figures
 
     Returns:
     None
@@ -62,6 +68,9 @@ def plot_column2(DataBase, column_G2):
     Parameters:
     DataBase (list): The database containing the data.
     column_G2 (int): The index of the column to plot.
+    
+    Prints:
+    Project graphs and figures
 
     Returns:
     None
@@ -86,6 +95,9 @@ def plot_power_bar(DataBase):
 
     Parameters:
     DataBase (list): The database containing the data.
+    
+    Prints:
+    Project graphs and figures
 
     Returns:
     None

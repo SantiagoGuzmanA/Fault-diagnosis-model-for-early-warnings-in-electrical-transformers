@@ -11,6 +11,9 @@ def plot_histograms(df):
 
     Parameters:
     df (pandas.DataFrame): The DataFrame containing the data.
+    
+    Prints:
+    Project graphs and figures
 
     Returns:
     None
